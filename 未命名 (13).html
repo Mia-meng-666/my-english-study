@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>中考必背短语 - 第8天</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        body {
+            background: #f7f9fc;
+            padding: 30px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .phrase {
+            font-size: 26px;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        .meaning {
+            font-size: 20px;
+            color: #4a5568;
+            margin-bottom: 20px;
+        }
+        .sentence-cn {
+            font-size: 18px;
+            color: #2d3748;
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+        .sentence-en {
+            font-size: 18px;
+            color: #2b6cb0;
+            margin: 10px 0;
+            line-height: 1.6;
+            display: none;
+        }
+        .learn-page {
+            display: block;
+        }
+        .test-page {
+            display: none;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+        .test-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .answer {
+            font-size: 18px;
+            color: #38a169;
+            font-weight: bold;
+            margin-top: 10px;
+            display: none;
+        }
+        button {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            background: #4299e1;
+            color: white;
+            font-size: 16px;
+            margin: 8px 5px 8px 0;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        button:hover {
+            background: #3182ce;
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .index {
+            text-align: center;
+            color: #718096;
+            margin-top: 10px;
+        }
+        .test-btn {
+            background: #9f7aea;
+        }
+        .test-btn:hover {
+            background: #805ad5;
+        }
+        .answer-btn {
+            background: #38a169;
+        }
+        .answer-btn:hover {
+            background: #31975a;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <!-- 背诵页 -->
+        <div class="learn-page" id="learnPage">
+            <div class="phrase" id="phrase"></div>
+            <div class="meaning" id="meaning"></div>
+            <div class="sentence-cn" id="sentenceCn"></div>
+            <button onclick="showEnSentence()">显示英文例句</button>
+            <div class="sentence-en" id="sentenceEn"></div>
+            <button class="test-btn" onclick="showTestPage()">进入测试</button>
+        </div>
+
+        <!-- 测试页 -->
+        <div class="test-page" id="testPage">
+            <div class="test-title">中译英测试：请把中文翻译成英文</div>
+            <button class="answer-btn" onclick="showAnswer()">显示答案</button>
+            <div class="answer" id="answer"></div>
+            <div class="nav">
+                <button onclick="backToLearnPage()">返回背诵</button>
+                <button onclick="next()">下一个短语</button>
+            </div>
+        </div>
+
+        <div class="nav" id="learnNav">
+            <button onclick="prev()">上一个</button>
+            <button onclick="next()">下一个</button>
+        </div>
+        <div class="index" id="index"></div>
+    </div>
+
+    <script>
+        // 中考必背高频短语 - 第8天
+        const data = [
+            // off 短语
+            { p: "break off", m: "突然终止；中断", cn: "他突然中断了谈话。", en: "He broke off the talk." },
+            { p: "clean off", m: "清除污渍/残留物", cn: "请擦掉桌子上的污渍。", en: "Please clean off the dirt on the desk." },
+            { p: "cut off", m: "切断（水源、电源等）", cn: "他们切断了供水。", en: "They cut off the water supply." },
+            { p: "go off", m: "发出声响；离开", cn: "闹钟响了。", en: "The alarm went off." },
+            { p: "put off", m: "推迟", cn: "我们不得不推迟会议。", en: "We have to put off the meeting." },
+            { p: "set off", m: "动身；出发；使爆炸", cn: "我们明天一早出发。", en: "We will set off early tomorrow." },
+            { p: "show off", m: "炫耀；卖弄", cn: "他喜欢炫耀他的新车。", en: "He likes showing off his new car." },
+            { p: "shut off", m: "关闭；使停止运转", cn: "请关掉机器。", en: "Please shut off the machine." },
+            { p: "take off", m: "脱下（衣服）；（飞机等）起飞", cn: "飞机起飞了。", en: "The plane took off." },
+
+            // up 短语
+            { p: "break up", m: "粉碎；破碎", cn: "玻璃摔碎了。", en: "The glass broke up." },
+            { p: "bring up", m: "教育；培养；抚养", cn: "他由祖父母抚养长大。", en: "He was brought up by his grandparents." },
+            { p: "call up", m: "打电话给某人；征召", cn: "我明天会打电话给你。", en: "I will call you up tomorrow." },
+            { p: "cheer up", m: "使振作起来", cn: "让我们让他振作起来。", en: "Let's cheer him up." },
+            { p: "clean up", m: "打扫", cn: "我们打扫了教室。", en: "We cleaned up the classroom." },
+            { p: "cut up", m: "切碎", cn: "请把苹果切碎。", en: "Please cut up the apples." },
+            { p: "dress up", m: "装扮；乔装打扮", cn: "我们装扮成海盗。", en: "We dressed up as pirates." },
+            { p: "eat up", m: "吃光", cn: "他吃光了所有食物。", en: "He ate up all the food." },
+            { p: "fill up", m: "填补，装满，堵塞", cn: "请把瓶子装满水。", en: "Please fill up the bottle with water." },
+            { p: "fix up", m: "修理；修补", cn: "他修理了我的自行车。", en: "He fixed up my bike." },
+            { p: "get up", m: "起床；站起", cn: "我每天早上六点起床。", en: "I get up at six every morning." },
+            { p: "give up", m: "放弃", cn: "不要放弃你的梦想。", en: "Don't give up your dream." },
+            { p: "grow up", m: "成长；长大", cn: "我长大后想当医生。", en: "I want to be a doctor when I grow up." },
+            { p: "hang up", m: "挂断电话", cn: "他挂断了电话。", en: "He hung up the phone." },
+            { p: "hurry up", m: "赶快", cn: "快点！我们要迟到了。", en: "Hurry up! We'll be late." },
+            { p: "lift up", m: "举起；抬起", cn: "他举起了重箱子。", en: "He lifted up the heavy box." },
+            { p: "look up", m: "查阅；抬头看", cn: "你可以在字典里查这个单词。", en: "You can look up the word in the dictionary." },
+            { p: "make up", m: "组成/编造/化妆", cn: "他编造了一个故事。", en: "He made up a story." },
+            { p: "mix up", m: "把…混合在一起", cn: "不要把这两种东西混合。", en: "Don't mix up the two things." },
+            { p: "pick up", m: "挑选；捡起；拿起；接（电话/某人）", cn: "他捡起了地上的书。", en: "He picked up the book on the ground." },
+            { p: "ring up", m: "打电话", cn: "请给我打电话。", en: "Please ring me up." },
+            { p: "set up", m: "创办；建立", cn: "他建立了一个俱乐部。", en: "He set up a club." },
+            { p: "show up", m: "露面/出现/赶到", cn: "他最后出现了。", en: "He showed up at last." },
+            { p: "speak up", m: "大点儿声说；大胆讲；畅所欲言", cn: "请大声说。", en: "Please speak up." },
+            { p: "stand up", m: "起立", cn: "请起立。", en: "Please stand up." },
+            { p: "take up", m: "开始、占据、拿起", cn: "这项工作占用了很多时间。", en: "The work takes up much time." },
+            { p: "think up", m: "想出", cn: "他想出了一个好主意。", en: "He thought up a good idea." },
+            { p: "tidy up", m: "整理；收拾；归置", cn: "我整理了我的房间。", en: "I tidied up my room." },
+            { p: "use up", m: "用完；耗尽", cn: "我们用完了水。", en: "We used up the water." },
+            { p: "wake up", m: "醒来", cn: "我每天早上七点醒来。", en: "I wake up at seven every morning." },
+            { p: "warm up", m: "热身；做准备", cn: "运动员正在热身。", en: "The players are warming up." },
+            { p: "jump up and down", m: "跳起来；上蹿下跳", cn: "他高兴得跳上跳下。", en: "He jumped up and down happily." },
+
+            // with 短语
+            { p: "agree with sb.", m: "赞同某人；与某人持相同意见", cn: "我同意你的看法。", en: "I agree with you." },
+            { p: "argue with sb.", m: "与某人争吵", cn: "不要和父母争吵。", en: "Don't argue with your parents." },
+            { p: "begin with/start with", m: "以……开始；从……着手", cn: "我们以一个故事开始。", en: "We begin with a story." },
+            { p: "communicate with sb.", m: "和某人交流、沟通", cn: "我们应该和父母多交流。", en: "We should communicate with parents more." },
+            { p: "compare…with…", m: "把……与……作比较", cn: "不要把我和别人比较。", en: "Don't compare me with others." },
+            { p: "connect with…", m: "与……有联系、相关联", cn: "这件事和他有关。", en: "This thing connects with him." },
+            { p: "deal with", m: "处理；应付（与 how 连用）", cn: "我不知道如何处理这个问题。", en: "I don't know how to deal with the problem." },
+            { p: "do with", m: "处理（与what连用）", cn: "你怎么处理这个问题？", en: "What will you do with the problem?" },
+            { p: "fill with", m: "装满，充满", cn: "篮子里装满了苹果。", en: "The basket is filled with apples." },
+            { p: "part with", m: "放弃、交出（尤指不舍得的东西）", cn: "他不舍得放弃这本书。", en: "He doesn't want to part with the book." },
+            { p: "play with", m: "和……玩耍", cn: "我喜欢和小狗玩。", en: "I like to play with the dog." },
+            { p: "provide sb. with sth.", m: "给某人提供某物", cn: "父母给我提供食物和衣服。", en: "Parents provide me with food and clothes." },
+            { p: "share…with…", m: "与…分享…", cn: "我和朋友分享我的蛋糕。", en: "I share my cake with my friend." },
+            { p: "stay with sb.", m: "和某人待一起", cn: "我和祖父母住在一起。", en: "I stay with my grandparents." },
+            { p: "talk with sb.", m: "与某人交谈", cn: "我正在和老师交谈。", en: "I am talking with the teacher." },
+            { p: "catch up with", m: "赶上", cn: "我努力赶上同学们。", en: "I try to catch up with my classmates." },
+            { p: "come up with", m: "提出；想出", cn: "他想出了一个好办法。", en: "He came up with a good idea." },
+            { p: "end up with", m: "以……结束", cn: "聚会以歌声结束。", en: "The party ended up with a song." },
+            { p: "have to do with", m: "关于……；与……有关", cn: "这件事和我无关。", en: "It has nothing to do with me." },
+            { p: "fall in love with", m: "爱上……", cn: "我爱上了这座城市。", en: "I fell in love with this city." },
+            { p: "get along/on well with", m: "与……和睦相处", cn: "我和同学相处得很好。", en: "I get along well with my classmates." }
+        ];
+
+        let current = 0;
+
+        function show() {
+            const item = data[current];
+            document.getElementById("phrase").innerText = item.p;
+            document.getElementById("meaning").innerText = item.m;
+            document.getElementById("sentenceCn").innerText = "中文例句：" + item.cn;
+            document.getElementById("sentenceEn").innerText = "英文例句：" + item.en;
+            document.querySelector(".test-title").innerText = `中译英测试：请把「${item.m}」翻译成英文`;
+            document.getElementById("answer").innerText = "答案：" + item.p;
+
+            document.getElementById("sentenceEn").style.display = "none";
+            document.getElementById("answer").style.display = "none";
+            document.getElementById("learnPage").style.display = "block";
+            document.getElementById("testPage").style.display = "none";
+            document.getElementById("index").innerText = `${current + 1} / ${data.length}`;
+        }
+
+        function showEnSentence() {
+            document.getElementById("sentenceEn").style.display = "block";
+        }
+
+        function showTestPage() {
+            document.getElementById("learnPage").style.display = "none";
+            document.getElementById("testPage").style.display = "block";
+            document.getElementById("learnNav").style.display = "none";
+        }
+
+        function backToLearnPage() {
+            document.getElementById("testPage").style.display = "none";
+            document.getElementById("learnPage").style.display = "block";
+            document.getElementById("learnNav").style.display = "flex";
+        }
+
+        function showAnswer() {
+            document.getElementById("answer").style.display = "block";
+        }
+
+        function prev() {
+            current = (current - 1 + data.length) % data.length;
+            show();
+            backToLearnPage();
+        }
+
+        function next() {
+            current = (current + 1) % data.length;
+            show();
+            backToLearnPage();
+        }
+
+        window.onload = show;
+    </script>
+</body>
+</html>
